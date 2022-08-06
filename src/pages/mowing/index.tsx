@@ -1,5 +1,6 @@
 import type { Mowing, MowingLocation } from "@prisma/client";
 import type { NextPage } from "next";
+import { NextRouter, useRouter } from "next/router";
 import { trpc } from "../../utils/trpc";
 
 type Mow = Mowing & { location: MowingLocation }
@@ -16,9 +17,16 @@ const MowTH = ({ text }: { text: string }) => {
   )
 }
 
-const MowingRow = ({ mowing }: { mowing: Mow }) => {
+const MowingRow = ({ mowing, router }: { mowing: Mow, router: NextRouter }) => {
+
+  const edit = (id: string) => {
+    router.push(`/mowing/${id}`)
+
+  }
+
   return (
-    <tr className="flex w-full hover:bg-green-100 border-b border-collapse border-slate-500 text-lg">
+    <tr className="flex w-full hover:bg-green-100 border-b border-collapse border-slate-500 text-lg"
+      onClick={() => edit(mowing.id)}>
       <MowTD text={mowing.location.name} />
       <MowTD text={mowing.direction} />
       <MowTD text={mowing.date.toDateString()} />
@@ -27,6 +35,7 @@ const MowingRow = ({ mowing }: { mowing: Mow }) => {
 }
 
 const MowingTable = ({ mowings }: { mowings: Array<Mow> }) => {
+  const router = useRouter()
   return (
     <div className="">
       <table className="text-left w-full">
@@ -38,7 +47,7 @@ const MowingTable = ({ mowings }: { mowings: Array<Mow> }) => {
           </tr>
         </thead>
         <tbody className="h-[75vh] flex flex-col items-center justify-between overflow-y-auto w-full">
-          {mowings.map(mow => <MowingRow key={mow.id} mowing={mow} />)}
+          {mowings.map(mow => <MowingRow key={mow.id} mowing={mow} router={router} />)}
         </tbody>
       </table>
     </div>

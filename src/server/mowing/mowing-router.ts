@@ -9,7 +9,7 @@ export const mowingRouter = createProtectedRouter()
   })
   .query("getAll", {
     async resolve({ ctx }) {
-      return await ctx.prisma.mowing.findMany({include: {location: true}, orderBy: {date: 'desc'}})
+      return await ctx.prisma.mowing.findMany({ include: { location: true }, orderBy: { date: 'desc' } })
     },
   })
   .query("getLocations", {
@@ -102,4 +102,10 @@ export const mowingRouter = createProtectedRouter()
         }
       })
     }
+  })
+  .mutation("deleteMowing", {
+    input: z.string(),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.mowing.delete({ where: { id: input } })
+    },
   })
