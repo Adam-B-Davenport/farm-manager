@@ -1,6 +1,6 @@
 import type { Mowing, MowingLocation } from "@prisma/client";
 import type { NextPage } from "next";
-import { trpc } from "../utils/trpc";
+import { trpc } from "../../utils/trpc";
 
 type Mow = Mowing & { location: MowingLocation }
 
