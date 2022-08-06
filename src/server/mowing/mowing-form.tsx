@@ -64,21 +64,21 @@ const MowingForm = ({ locations, mowing }: { locations: Array<MowingLocation>, m
 
   return (
     <>
-      <div className="w-full max-w-xs">
+      <div className="w-full max-w-md m-auto">
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="location">
+            <label className="block text-gray-700 text-xl font-bold mb-2" htmlFor="location">
               Location
             </label>
             <select
-              className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+              className="block text-xl appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
               value={location}
               name="location"
               id="locations"
               onChange={locationChanged}>
               {
                 locations.map(loc => {
-                  return <option key={loc.id} value={loc.id}>{loc.name}</option>
+                  return <option className="text-xl" key={loc.id} value={loc.id}>{loc.name}</option>
                 })
               }
             </select>
@@ -90,12 +90,14 @@ const MowingForm = ({ locations, mowing }: { locations: Array<MowingLocation>, m
                   e.preventDefault()
                   clickEvent(d.value)
                 }}
-                className="font-bold text-slate-100 bg-green-500 hover:bg-green-600 rounded px-4 py-2 focus:outline-none focus:shadow-outline"
+                className="font-bold text-xl text-slate-100 bg-green-500 hover:bg-green-600 rounded px-4 py-4 focus:outline-none focus:shadow-outline"
                 key={d.value}>
                 {d.display}
               </button>
             )}
-            { !isNew && <button onClick={deleteCLick}>delete</button> }
+            { !isNew && <button 
+              className="bg-red-400 rounded col-span-2 w-2/3 m-auto px-5 py-1 mt-10 text-xl text-slate-100"
+            onClick={deleteCLick}>delete</button> }
           </div>
         </form>
       </div>
