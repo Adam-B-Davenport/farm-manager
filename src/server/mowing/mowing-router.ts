@@ -72,11 +72,13 @@ export const mowingRouter = createProtectedRouter()
       z.object({
         direction: z.string().min(1).max(2),
         locationId: z.string(),
+        date: z.date().optional(),
       }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.mowing.create({
         data: {
           direction: input.direction,
+          date: input.date,
           location: { connect: { id: input.locationId } },
           user: { connect: { id: ctx.session.user.id } }
         }
@@ -89,6 +91,7 @@ export const mowingRouter = createProtectedRouter()
         id: z.string().min(1).cuid(),
         direction: z.string().min(1).max(2),
         locationId: z.string(),
+        date: z.date().optional(),
       }),
     async resolve({ input, ctx }) {
       return await ctx.prisma.mowing.update({
@@ -97,6 +100,7 @@ export const mowingRouter = createProtectedRouter()
         },
         data: {
           direction: input.direction,
+          date: input.date,
           location: { connect: { id: input.locationId } },
           user: { connect: { id: ctx.session.user.id } }
         }
