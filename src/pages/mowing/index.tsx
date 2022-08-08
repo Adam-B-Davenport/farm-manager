@@ -45,7 +45,7 @@ const MowingTable = ({ mowings }: { mowings: Array<Mow> }) => {
             <td className="w-1/2">Date</td>
           </tr>
         </thead>
-        <tbody className="h-[75vh] flex flex-col items-center justify-between overflow-y-auto w-full px-2">
+        <tbody className="h-[50vh] flex flex-col justify-between overflow-y-auto w-full px-2">
           {mowings.map(mow => <MowingRow key={mow.id} mowing={mow} router={router} />)}
         </tbody>
       </table>
@@ -63,16 +63,19 @@ const MowingPage: NextPage = () => {
         <p>Loading...</p>
       </>
     )
-  else
+  else{
     return (
       <>
         <div className="container m-auto p-8 h-screen overflow-y-hidden">
           <h1 className="text-center text-3xl">Mowing</h1>
           <MowingTable mowings={mowingQuery.data} />
-          <a href="/mowing/new" className="bg-green-500 rounded-lg px-8 py-2 text-neutral-50 text-2xl mt-8 float-right">+</a>
+          <div className="max-w-md m-auto">
+            <a href="/mowing/new" className="bg-green-500 rounded-lg px-8 py-2 text-neutral-50 text-2xl mt-8 float-right">+</a>
+          </div>
         </div>
       </>
     )
+  }
 }
 
 export default MowingPage

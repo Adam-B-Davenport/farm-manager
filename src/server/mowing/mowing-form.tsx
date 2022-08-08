@@ -7,13 +7,13 @@ import { MouseEvent } from "react"
 const htmlDate = (date: Date) => {
 
   const year = date.getFullYear()
-  const month = (date.getUTCMonth() + 1 < 10) ?
-    `0${date.getUTCMonth() + 1}` :
+  const month = (date.getMonth() + 1 < 10) ?
+    `0${date.getMonth() + 1}` :
     date.getUTCMonth
   const day = date.getUTCDate() < 10 ?
-    `0${date.getUTCDate()}` :
+    `0${date.getDate()}` :
     date.getUTCMonth
-  console.log( `${year}-${month}-${day}`)
+  console.log(`${year}-${month}-${day}`)
   return `${year}-${month}-${day}`
 }
 
@@ -42,7 +42,7 @@ const MowingForm = ({ locations, mowing }: { locations: Array<MowingLocation>, m
       setLocation(mowing.locationId)
       setDate(htmlDate(mowing.date))
     }
-    else{
+    else {
       const now = new Date()
       setDate(htmlDate(now))
     }
@@ -53,14 +53,17 @@ const MowingForm = ({ locations, mowing }: { locations: Array<MowingLocation>, m
   }
 
   const clickEvent = async (val: string) => {
-    if (!date || date === ""){
+    if (!date || date === "") {
       alert("Date must be set.")
       return
     }
 
     let valid = false
     if (!mowing) {
-      newMutation.mutate({ direction: val, locationId: location, date: new Date(date) })
+      let dt = new Date(date)
+      dt.setDate(dt.getDate() + 1)
+      console.log(dt.toString())
+      newMutation.mutate({ direction: val, locationId: location, date: dt })
     }
     else {
       mowing.direction = val
@@ -79,8 +82,8 @@ const MowingForm = ({ locations, mowing }: { locations: Array<MowingLocation>, m
 
   const deleteCLick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    if (confirm("Are you sure you want to delete this record?")) {
-      deleteMutation.mutate(router.query.id as string)
+    if (confirm("Are you sure you want to delete this record?") && mowing) {
+      deleteMutation.mutate(mowing.id)
       if (!deleteMutation.error)
         router.push('/mowing')
       else

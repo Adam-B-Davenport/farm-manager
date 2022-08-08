@@ -1,15 +1,22 @@
 import { trpc } from "../../utils/trpc";
 import { NextPage } from "next"
 import MowingForm from "../../server/mowing/mowing-form";
+import { useRouter } from "next/router";
 
 const NewPage: NextPage = () => {
   const locationQuery = trpc.useQuery(["mowing.getLocations"])
-  if (!locationQuery.data)
-    return (
+  const router = useRouter()
+  const loader = (
       <div className="w-screen h-screen">
         <p className="mar text-5xl mt-[50vh] text-center" >...</p>
       </div>
     )
+  if (locationQuery.data && locationQuery.data.length === 0){
+    router.push('/location/new')
+    return loader
+  }
+  if (!locationQuery.data)
+    return loader
   else
     return (
       <>

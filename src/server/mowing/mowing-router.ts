@@ -56,6 +56,12 @@ export const mowingRouter = createProtectedRouter()
       })
     }
   })
+  .mutation("deleteLocation", {
+    input: z.string(),
+    async resolve({ input, ctx }) {
+      return await ctx.prisma.mowingLocation.delete({ where: { id: input } })
+    },
+  })
   .query("getMowings", {
     async resolve({ ctx }) {
       return await ctx.prisma.mowing.findMany()
