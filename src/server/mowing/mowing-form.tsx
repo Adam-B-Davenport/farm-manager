@@ -34,7 +34,6 @@ const MowingForm = ({ locations, mowing }: { locations: Array<MowingLocation>, m
   const newMutation = trpc.useMutation(['mowing.createMowing'])
   const editMutation = trpc.useMutation(['mowing.updateMowing'])
   const deleteMutation = trpc.useMutation(['mowing.deleteMowing'])
-  console.log(date)
 
   useEffect(() => {
     if (mowing) {
