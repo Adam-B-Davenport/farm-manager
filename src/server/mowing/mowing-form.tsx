@@ -5,15 +5,13 @@ import { trpc } from "../../utils/trpc";
 import { MouseEvent } from "react"
 
 const htmlDate = (date: Date) => {
-
   const year = date.getFullYear()
   const month = (date.getMonth() + 1 < 10) ?
     `0${date.getMonth() + 1}` :
-    date.getUTCMonth
-  const day = date.getUTCDate() < 10 ?
+    date.getMonth()
+  const day = date.getDate() < 10 ?
     `0${date.getDate()}` :
-    date.getUTCMonth
-  console.log(`${year}-${month}-${day}`)
+    date.getDate()
   return `${year}-${month}-${day}`
 }
 
@@ -42,7 +40,7 @@ const MowingForm = ({ locations, mowing }: { locations: Array<MowingLocation>, m
       setDate(htmlDate(mowing.date))
     }
     else {
-      const now = new Date()
+      const now = new Date(Date.now())
       setDate(htmlDate(now))
     }
   }, [])
