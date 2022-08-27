@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
 import { trpc } from "../../utils/trpc";
 import { MouseEvent } from "react"
+import Link from "next/link";
 
 const htmlDate = (date: Date) => {
   const year = date.getFullYear()
@@ -92,22 +93,28 @@ const MowingForm = ({ locations, mowing }: { locations: Array<MowingLocation>, m
     <>
       <div className="w-full max-w-md m-auto">
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <div className="mb-4">
+          <div className="mb-12">
             <label className="block text-gray-700 text-xl font-bold mb-2" htmlFor="location">
               Location
             </label>
-            <select
-              className="block text-xl appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-              value={location}
-              name="location"
-              id="locations"
-              onChange={locationChanged}>
-              {
-                locations.map(loc => {
-                  return <option className="text-xl" key={loc.id} value={loc.id}>{loc.name}</option>
-                })
-              }
-            </select>
+            <div className="inline">
+
+              <select
+                className="inline text-xl appearance-none w-[85%] box-border bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                value={location}
+                name="location"
+                id="locations"
+                onChange={locationChanged}>
+                {
+                  locations.map(loc => {
+                    return <option className="text-xl" key={loc.id} value={loc.id}>{loc.name}</option>
+                  })
+                }
+              </select>
+              <div className="text-center inline float-right max-w-[12%] box-border font-bold text-xl text-slate-100 bg-green-500 hover:bg-green-600 rounded px-4 py-2 focus:outline-none focus:shadow-outline">
+                <Link href="/location/new">+</Link>
+              </div>
+            </div>
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 text-xl font-bold mb-2" htmlFor="location">

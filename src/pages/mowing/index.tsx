@@ -2,6 +2,7 @@ import type { Mowing, MowingLocation } from "@prisma/client";
 import type { NextPage } from "next";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
+import Link from "next/link";
 import { NextRouter, useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { trpc } from "../../utils/trpc";
@@ -17,9 +18,9 @@ const MowingRow = ({ mowing, router }: { mowing: Mow, router: NextRouter }) => {
   return (
     <tr className="flex w-full hover:bg-green-100 border-b border-collapse border-slate-500"
       onClick={() => edit(mowing.id)}>
-      <td className="w-1/4">{mowing.location.name}</td>
-      <td className="w-1/4">{mowing.direction}</td>
-      <td className="w-1/2">{mowing.date.toDateString()} </td>
+      <td className="w-1/4 overflow-x-hidden">{mowing.location.name}</td>
+      <td className="w-1/4 overflow-x-hidden">{mowing.direction}</td>
+      <td className="w-auto">{mowing.date.toDateString()} </td>
     </tr>
   )
 }
@@ -29,8 +30,8 @@ const MowingTable = ({ mowings, router }: { mowings: Array<Mow>, router: NextRou
     <table className="text-left w-full max-w-md m-auto text-2xl">
       <thead className="flex w-full">
         <tr className="flex w-full bg-green-500 text-neutral-100 px-2">
-          <td className="w-1/4">Location</td>
-          <td className="w-1/4">Direction</td>
+          <td className="w-1/4 overflow-x-hidden">Location</td>
+          <td className="w-1/4 overflow-x-hidden">Direction</td>
           <td className="w-1/2">Date</td>
         </tr>
       </thead>
@@ -50,7 +51,7 @@ const MowingPage: NextPage = () => {
     getSession()
       .then(sess => {
         if (!sess || sess === null)
-          router.push('/api/auth/signing')
+          router.push('/api/auth/signin')
         else {
           setSession(sess)
         }
@@ -75,11 +76,13 @@ const MowingPage: NextPage = () => {
   else {
     return (
       <>
-        <div className="container m-auto p-8 h-screen overflow-y-auto">
+        <div className="container m-auto p-y-8 h-screen overflow-y-auto shadow-md max-w-screen-md">
           <h1 className="text-center text-3xl">Mowing</h1>
           <MowingTable mowings={mowingQuery.data} router={router} />
           <div className="max-w-md m-auto">
-            <a href="/mowing/new" className="bg-green-500 rounded-lg px-8 py-2 text-neutral-50 text-2xl mt-[-3rem] mr-[-5rem] float-right">+</a>
+            <div className="bg-green-500 rounded-lg px-8 py-2 text-neutral-50 text-2xl mt-2 float-right">
+              <Link href="/mowing/new" >+</Link>
+            </div>
           </div>
         </div>
       </>

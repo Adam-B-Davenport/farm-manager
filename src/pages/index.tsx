@@ -1,13 +1,16 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { NextRouter, useRouter } from "next/router";
 
-type TechnologyCardProps = {
+type CardProps = {
   name: string;
   description: string;
-  documentation: string;
+  link: string;
+  router: NextRouter;
 };
 
 const Home: NextPage = () => {
+  const router = useRouter()
   return (
     <>
       <Head>
@@ -17,15 +20,15 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
-        <h1 className="text-5xl md:text-[5rem] leading-normal font-extrabold text-gray-700">
-          Create <span className="text-purple-300">T3</span> App
+        <h1 className="text-5xl md:text-[5rem] leading-normal font-extrabold text-green-600">
+          Farm Manager
         </h1>
-        <p className="text-2xl text-gray-700">This stack uses:</p>
         <div className="grid gap-3 pt-3 mt-3 text-center md:grid-cols-2 lg:w-2/3">
-          <TechnologyCard
+          <Card
             name="Mowing"
             description="Mowing records"
-            documentation="/mowing"
+            link="/mowing"
+            router={router}
           />
         </div>
       </main>
@@ -33,23 +36,18 @@ const Home: NextPage = () => {
   );
 };
 
-const TechnologyCard = ({
+const Card = ({
   name,
   description,
-  documentation,
-}: TechnologyCardProps) => {
+  link,
+  router,
+}: CardProps) => {
   return (
-    <section className="flex flex-col justify-center p-6 duration-500 border-2 border-gray-500 rounded shadow-xl motion-safe:hover:scale-105">
-      <h2 className="text-lg text-gray-700">{name}</h2>
+    <section 
+      onClick={() => router.push(link)}
+      className="flex flex-col justify-center p-6 duration-500 border-2 border-green-500 rounded shadow-xl motion-safe:hover:scale-105 cursor-pointer">
+      <h2 className="text-3xl text-green-700">{name}</h2>
       <p className="text-sm text-gray-600">{description}</p>
-      <a
-        className="mt-3 text-sm underline text-violet-500 decoration-dotted underline-offset-2"
-        href={documentation}
-        target="_blank"
-        rel="noreferrer"
-      >
-        Documentation
-      </a>
     </section>
   );
 };
