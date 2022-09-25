@@ -46,17 +46,19 @@ model Session {
 }
 
 model User {
-    id            String     @id @default(cuid())
+    id            String      @id @default(cuid())
     name          String?
-    email         String?    @unique
+    email         String?     @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
-    role          Int        @default(0)
-    Locations     Location[]
-    Mowing        Mowing[]
-    Weeding       Weeding[]
+    role          Int         @default(0)
+    locations     Location[]
+    mowings       Mowing[]
+    weedings      Weeding[]
+    animals       Animal[]
+    treatments    Treatment[]
 }
 
 model VerificationToken {
@@ -94,4 +96,35 @@ model Weeding {
     userId     String
     user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     location   Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+}
+
+model Animal {
+    id         String      @id @default(cuid())
+    name       String
+    userId     String
+    user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+    treatments Treatment[]
+}
+
+model Treatment {
+    id       String @id @default(cuid())
+    notes    String
+    animalId String
+    animal   Animal @relation(fields: [animalId], references: [id], onDelete: Cascade)
+    userId   String
+    user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Equipment {
+    id          String        @id @default(cuid())
+    make        String
+    model       String
+    maintenance Maintenance[]
+}
+
+model Maintenance {
+    id          String    @id @default(cuid())
+    notes       String
+    equipmentId String
+    equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
 }
