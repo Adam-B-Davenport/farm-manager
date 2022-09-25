@@ -46,16 +46,17 @@ model Session {
 }
 
 model User {
-    id             String           @id @default(cuid())
-    name           String?
-    email          String?          @unique
-    emailVerified  DateTime?
-    image          String?
-    accounts       Account[]
-    sessions       Session[]
-    role           Int              @default(0)
-    MowingLocation MowingLocation[]
-    Mowing         Mowing[]
+    id            String     @id @default(cuid())
+    name          String?
+    email         String?    @unique
+    emailVerified DateTime?
+    image         String?
+    accounts      Account[]
+    sessions      Session[]
+    role          Int        @default(0)
+    Locations     Location[]
+    Mowing        Mowing[]
+    Weeding       Weeding[]
 }
 
 model VerificationToken {
@@ -66,20 +67,31 @@ model VerificationToken {
     @@unique([identifier, token])
 }
 
-model MowingLocation {
-    id     String   @id @default(cuid())
-    userId String
-    name   String
-    user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-    Mowing Mowing[]
+model Location {
+    id      String    @id @default(cuid())
+    userId  String
+    name    String
+    user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    Mowing  Mowing[]
+    Weeding Weeding[]
 }
 
 model Mowing {
-    id         String         @id @default(cuid())
+    id         String   @id @default(cuid())
     direction  String
-    date       DateTime       @default(now())
+    date       DateTime @default(now())
     locationId String
     userId     String
-    user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-    location   MowingLocation @relation(fields: [locationId], references: [id], onDelete: Cascade)
+    user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    location   Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+}
+
+model Weeding {
+    id         String   @id @default(cuid())
+    direction  String
+    date       DateTime @default(now())
+    locationId String
+    userId     String
+    user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    location   Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
 }

@@ -17,10 +17,10 @@ const directions = [
 
 const seed = async () => {
   await prisma.mowing.deleteMany()
-  await prisma.mowingLocation.deleteMany()
+  await prisma.location.deleteMany()
   const locations = []
   for (let i = 0; i < locationNames.length; i++) {
-    locations.push(await prisma.mowingLocation.create({
+    locations.push(await prisma.location.create({
       data: {
         name: locationNames[i],
         user: { connect: { id: uid } }
