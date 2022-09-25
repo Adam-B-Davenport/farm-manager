@@ -4,7 +4,7 @@ import MowingForm from "../../server/mowing/mowing-form";
 import { useRouter } from "next/router";
 
 const NewPage: NextPage = () => {
-  const locationQuery = trpc.useQuery(["mowing.getLocations"])
+  const locationQuery = trpc.useQuery(["location.getLocations"])
   const router = useRouter()
   const loader = (
       <div className="w-screen h-screen">

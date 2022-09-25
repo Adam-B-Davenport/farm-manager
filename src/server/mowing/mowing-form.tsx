@@ -1,4 +1,4 @@
-import { Mowing, MowingLocation } from "@prisma/client";
+import { Mowing, Location } from "@prisma/client";
 import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
 import { trpc } from "../../utils/trpc";
@@ -23,7 +23,7 @@ const Directions = [
   { value: "NW", display: "Northwest" },
 ]
 
-const MowingForm = ({ locations, mowing }: { locations: Array<MowingLocation>, mowing?: Mowing }) => {
+const MowingForm = ({ locations, mowing }: { locations: Array<Location>, mowing?: Mowing }) => {
   const [location, setLocation] = useState(locations[0].id)
   const [date, setDate] = useState("")
   const [isNew, setIsNew] = useState(true)

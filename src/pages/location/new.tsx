@@ -2,15 +2,15 @@ import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
 import { trpc } from "../../utils/trpc";
 import { MouseEvent } from "react"
-import type { MowingLocation } from "@prisma/client";
+import type { Location } from "@prisma/client";
 
-const LocationForm = ({ location }: { location?: MowingLocation }) => {
+const LocationForm = ({ location }: { location?: Location }) => {
   const [name, setName] = useState("")
   const router = useRouter()
 
-  const newMutation = trpc.useMutation(['mowing.createLocation'])
-  const editMutation = trpc.useMutation(['mowing.updateLocation'])
-  const deleteMutation = trpc.useMutation(['mowing.deleteLocation'])
+  const newMutation = trpc.useMutation(['location.createLocation'])
+  const editMutation = trpc.useMutation(['location.updateLocation'])
+  const deleteMutation = trpc.useMutation(['location.deleteLocation'])
 
   useEffect(() => {
     if (location) {

@@ -8,7 +8,7 @@ const EditPage: NextPage = () => {
 
   const router = useRouter()
 
-  const locationQuery = trpc.useQuery(["mowing.getLocations"])
+  const locationQuery = trpc.useQuery(["location.getLocations"])
   const mowQuery = trpc.useQuery(["mowing.findMowing", router.query.id as string])
 
   if (!locationQuery.data || !mowQuery.data)

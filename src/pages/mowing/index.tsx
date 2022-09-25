@@ -1,4 +1,4 @@
-import type { Mowing, MowingLocation } from "@prisma/client";
+import type { Mowing, Location } from "@prisma/client";
 import type { NextPage } from "next";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
@@ -7,7 +7,7 @@ import { NextRouter, useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { trpc } from "../../utils/trpc";
 
-type Mow = Mowing & { location: MowingLocation }
+type Mow = Mowing & { location: Location }
 
 const MowingRow = ({ mowing, router }: { mowing: Mow, router: NextRouter }) => {
 
